@@ -4,7 +4,7 @@ import registro from "../components/RegisterColombia.vue";
 import menu from "../components/MenuPrincipal.vue";
 import inventario from "../components/InventarioColombia.vue";
 import usuario from "../components/UsuarioColombia.vue";
-
+import impresora from '../components/ImpresoraCol.vue'
 
 const routes = [
    {
@@ -32,6 +32,11 @@ const routes = [
   name: "usuario",
   component: usuario,
 },
+{
+  path: "/impresora",
+  name: "impresora",
+  component: impresora,
+}
 ];
 
 const router = new createRouter({
