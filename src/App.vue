@@ -29,7 +29,7 @@
         temporary
       >
       <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi mdi-printer" title="Impresora" value="impresora" to=/impresora></v-list-item>
+          <v-list-item prepend-icon="mdi mdi-printer" title="Impresoras" value="impresoras" to=/impresora></v-list-item>
           <v-list-item prepend-icon="mdi mdi-monitor-multiple" title="Empresa" value="empresa" to=/empresa></v-list-item>
           <v-list-item prepend-icon="mdi mdi-account-plus" title="Usuario" value="usuario" to=/usuario></v-list-item>
           <v-list-item prepend-icon="mdi mdi-clipboard-text" title="Inventario" value="inventario" to=/inventario></v-list-item>
