@@ -144,7 +144,7 @@
   <script>
 
     import db from '../firebase/datos.js';
-    import {collection, getDocs, query, addDoc, updateDoc, doc} from 'firebase/firestore'
+    import {collection, getDocs, query, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore'
 
     export default {
       data: () => ({
@@ -164,16 +164,17 @@
         desserts: [],
         editedIndex: -1,
         editedItem: {
-          rol: 0,  
-          id: 0,
-          usuario: 0,
-          clave: 0,
+          keyId:0,
+          rol: ' ',  
+          id: ' ',
+          usuario: ' ',
+          clave: ' ',
         },
         defaultItem: {
-          rol: 0, 
+          rol: ' ', 
           id: 0,
-          usuario: 0,
-          clave: 0,
+          usuario: ' ',
+          clave: ' ',
         },
       }),
   
@@ -198,14 +199,31 @@
       },
 
       methods: {
-        async listarUsuarios(){
-                const q = query(collection(db,"usuarios"));
-                const resul = await getDocs(q);
-                resul.forEach((doc) => {
-                  console.log("datos",doc.data());
-                  this.desserts.push(doc.data());
-                })
+        initialize(){
+          this.desserts = [
+            {
+              rol: ' ',
+              id: ' ',
+              usuario: ' ',
+              clave: ' ',
+            }
 
+          ]
+        },
+            async listarUsuarios() {
+                const q = query(collection(db,"usuarios"));
+                const result = await getDocs(q);
+                result.forEach((doc) => {
+                  console.log("datos",doc.data());
+                  console.log('id', doc.id);
+                  this.desserts.push({
+                    keyId: doc.id,
+                    rol : doc.data().rol,
+                    id: doc.data().id,
+                    usuario: doc.data().usuario,
+                    clave: doc.data().clave,
+                    })
+                });
             },
 
             async createUser(){
@@ -219,24 +237,32 @@
               }
               const docRef = await addDoc(colRef, dataObj)
               console.log ('Document was created with: ID:', docRef.id)
-
               
-
             },
 
             async updateUser() {
-              const washingtonRef = doc(db, "usuarios", "4y5YHez2aX6k7BoTrdTR");
-              // Set the "capital" field of the city 'DC'
-              await updateDoc(washingtonRef, {
-                  rol: "nuevos",
-                  id:"3",
-                  usuario: "Acevedo",
-                  clave: "1234567",
-                });
+              console.log (this.editItem.keyId)
+              const ref = doc(db, "usuarios", this.editedItem.keyId);
+              await updateDoc(ref, {
+                  rol: this.editedItem.rol,
+                  id: this.editedItem.id,
+                  usuario: this.editedItem.usuario,
+                  clave: this.editedItem.clave,
+                })
+                .then(console.log('actualizacion realizada'))
+                .catch(function(error){
+                console.log(error)})
             },
-            
 
-        initialize () {
+            async borrarItem (){
+            const ref = doc(db, 'usuarios',this.editedItem.keyId);
+            await deleteDoc(ref)
+            .then(console.log('eliminado'))
+            .catch(function(error){
+            console.log(error)})
+      },
+
+/*         initialize () {
           this.desserts = [
             {
               rol: 'Administrador',
@@ -253,14 +279,12 @@
             }, 
             
           ]
-        },
+        }, */
   
         editItem (item) {
           this.editedIndex = this.desserts.indexOf(item)
           this.editedItem = Object.assign({}, item)
           this.dialog = true
-          this.updateUser();
-          
         },
   
         deleteItem (item) {
@@ -272,13 +296,14 @@
         deleteItemConfirm () {
           this.desserts.splice(this.editedIndex, 1)
           this.closeDelete()
+          this.borrarItem()
         },
   
         close () {
           this.dialog = false
           this.$nextTick(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            this.editedIndex = -1
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
           })
         },
   
@@ -293,6 +318,7 @@
         save () {
           if (this.editedIndex > -1) {
             Object.assign(this.desserts[this.editedIndex], this.editedItem)
+            this.updateUser()
           } else {
             this.desserts.push(this.editedItem)
             this.createUser();
