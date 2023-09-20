@@ -1,153 +1,205 @@
-<script setup>
-import {ref } from "vue";
-
-const collapsed = ref(true);
-
-
-</script>
-
 <template>
-  <div :class="['menu', collapsed ? 'collapsed' : 'expanded']">
-    <div class="header">
-      <button class="menu-button" @click="collapsed = !collapsed">
-        <font-awesome-icon icon="fa-solid fa-bars" size="2x" />
-      </button>
-    </div>
+  <v-card>
+<v-layout>
+  <v-app-bar
+    color= blue
+    prominent
+  >
+    <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+       
+    <v-toolbar-title>
+      <v-img src="../assets/logo_colombia.png" alt="Logo de Colombia Inkjet" width="50px" class="profile">
+      </v-img>
+    </v-toolbar-title>
 
-    <div class="profile">
-      <v-img src="../assets/logo_colombia.png" alt="" />
-      <div class="profile-name" v-if="!collapsed">
-        Colombia Inkjet
+    <v-spacer></v-spacer>
+    <v-btn
+fluid
+style="height: 300px"
+>
+<v-row justify="center">
+<v-menu
+  min-width="200px"
+  rounded
+>
+  <template v-slot:activator="{ props }">
+    <v-btn
+      icon
+      v-bind="props"
+    >
+      <v-avatar
+        color="white"
+        size="large"
+      >
+        <span class="text-h5" color="black">{{ user.initials }}</span>
+      </v-avatar>
+    </v-btn>
+  </template>
+  <v-card>
+    <v-card-text>
+      <div class="mx-auto text-center">
+        <v-avatar
+          color="blue"
+        >
+          <span class="text-h5">{{ user.initials }}</span>
+        </v-avatar>
+        <h3>{{ user.fullName }}</h3>
+        <p class="text-caption mt-1">
+          {{ user.email }}
+        </p>
+        <v-divider class="my-3"></v-divider>
+        <v-btn
+          rounded
+          variant="text"
+        >
+          Editar
+        </v-btn>
+        <v-divider class="my-3"></v-divider>
+        <v-btn
+          rounded
+          variant="text"
+         to="/usuario">
+          Cerrar Sesion
+        </v-btn>
       </div>
-    </div>
+    </v-card-text>
+  </v-card>
+</v-menu>
+</v-row>
 
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-house-user']" size="2x" />
-          <router-link to="/menu" class="a" v-if="!collapsed" font-awesome-icon :icon="['fa-solid', 'fa-house-user']" size="2x" >Home</router-link>
-        </div>
-    </div>  
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-print']" size="2x" />
-          <router-link to="/impresora" class="a" v-if="!collapsed">Impresora</router-link>
-        </div>
-    </div>  
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-building-user']" size="2x" />
-          <router-link to="/empresa" class="a" v-if="!collapsed">Empresa</router-link>
-        </div>
-    </div>  
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-user-plus']" size="2x" />
-          <router-link to="/usuario" class="a" v-if="!collapsed">Usuario</router-link>
-        </div>
-    </div> 
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-newspaper']" size="2x" />
-          <router-link to="/inventario" class="a" v-if="!collapsed">Inventario</router-link>
-        </div>
-    </div>  
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-screwdriver-wrench']" size="2x" />
-          <router-link to="/mantenimiento" class="a" v-if="!collapsed">Mantemiento</router-link>
-        </div>
-    </div> 
-    <div class="menu-items">
-        <div class="icon">
-          <font-awesome-icon :icon="['fa-solid', 'fa-user-xmark']" size="2x" />
-          <router-link to="/registro" class="a" v-if="!collapsed">Cerrar Sesion</router-link>
-        </div>
-    </div>      
-  </div> -->
+    </v-btn>
+    
+  </v-app-bar>
+
+  <v-navigation-drawer
+    v-model="drawer"
+    location="left"
+    temporary
+  >
+  <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi mdi-printer" title="Inventario" value="impresoras" to=/impresora></v-list-item>
+        <!-- Inventario es lo mismo que impresoras -->
+        <v-list-item prepend-icon="mdi mdi-monitor-multiple" title="Empresas" value="empresas" to=/empresas></v-list-item>
+        <v-list-item prepend-icon="mdi mdi-account-plus" title="Usuario" value="usuario" to=/usuario></v-list-item>
+        <v-list-item prepend-icon="mdi mdi-cogs" title="Mantenimiento" value="mantenimiento" to=/mantenimiento></v-list-item>
+      </v-list>
+      <v-list >
+        <v-spacer></v-spacer>
+        
+        <v-list-item prepend-icon="mdi mdi-clipboard-text" title="INICIAR SESION" value="registrar" to=/registrar></v-list-item>
+      </v-list>
+  </v-navigation-drawer>
+
+  <v-main style="height: 100vh; width: 100vw">
+    <router-view></router-view>
+  </v-main>
+</v-layout>
+</v-card>
 </template>
+<script>
+export default {
+data: () => ({
+user: {
+    initials: 'AD',
+    fullName: 'Administrador',
+    email: 'admin@colombiainkjet.com',
+  },
+  drawer: false,
+  group: null,
+}),
 
+watch: {
+  group () {
+    this.drawer = false
+  },
+},
+}
+</script>
 <style scoped>
 .menu {
-  background-color: #222;
-  color: white;
-  height: 100vh;
-  transition: width 0.3s;
-  font-family: Arial, Helvetica, sans-serif;
-  position: fixed;
-  left: 0;
-  top: 0;
+background-color: #222;
+color: white;
+height: 100vh;
+transition: width 0.3s;
+font-family: Arial, Helvetica, sans-serif;
+position: fixed;
+left: 0;
+top: 0;
 }
 
 .header {
-  display: flex;
-  justify-content: end;
+display: flex;
+justify-content: end;
 }
 
 .menu-button {
-  border: none;
-  background-color: transparent;
-  color: white;
-  padding: 10px;
+border: none;
+background-color: transparent;
+color: white;
+padding: 10px;
 }
 
 /* we will explain what these classes do next! */
 .collapsed {
-  width: 80px;
+width: 80px;
 }
 
 .expanded {
-  width: 230px;
+width: 230px;
 }
 
 .profile {
-  padding: 10px;
-  text-align: center;
+padding: 10px;
+text-align: center;
 }
+
 .profile img {
-  border-radius: 50%;
-  min-width: 50px;
-  max-width: 150px;
-  width: 100%;
+border-radius: 50%;
+min-width: 50px;
+max-width: 150px;
+width: 100%;
 }
 
 .profile-name {
-  padding: 10px 0;
-  font-size: 18px;
+padding: 10px 0;
+font-size: 18px;
 }
 
 .menu-items {
-  list-style: none;
-  padding: 1px;
-  margin: 20px;
-  align-items: center;
-  justify-content: center;
+list-style: none;
+padding: 1px;
+margin: 20px;
+align-items: center;
+justify-content: center;
 
 }
+
 .a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  align-items: center;
-  text-align: center;
+color: white;
+text-decoration: none;
+display: block;
+align-items: center;
+text-align: center;
 }
-.icon{
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  align-items: center;
-  
+
+.icon {
+display: flex;
+align-items: center;
+gap: 20px;
+align-items: center;
+
 }
 
 .a:hover {
-  background-color: white;
-  color: black;
-  
+background-color: white;
+color: black;
+
 }
 
 /* .item .icon {
-  width: 80px;
-  display: flex;
-  justify-content: center;
-  
+width: 80px;
+display: flex;
+justify-content: center;
+
 } */
 </style>

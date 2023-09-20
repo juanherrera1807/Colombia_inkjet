@@ -4,18 +4,32 @@
     :items="desserts"
     :sort-by="[{ key: 'numero', order: 'asc' }]"
     class="elevation-1"
+    style="height: 100%;
+    width: 100%"
+    :search="search"
   >
     <template v-slot:top>
       <v-toolbar
         flat
       >
         <v-toolbar-title>IMPRESORAS</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
+        
         <v-spacer></v-spacer>
+
+        <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Buscar"
+            single-line
+            hide-details
+          ></v-text-field>
+
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          ></v-divider>     
+
         <v-dialog
           v-model="dialog"
           max-width="500px"
@@ -166,6 +180,7 @@ import {collection, addDoc, query, getDocs, updateDoc, doc, deleteDoc} from 'fir
     data: () => ({
       dialog: false,
       dialogDelete: false,
+      search: '',
       headers: [
         { title: 'n°', align: 'start', sortable: false, key: 'numero',},
         { title: 'Serial', align: 'end', key: 'serial' },
@@ -329,4 +344,3 @@ import {collection, addDoc, query, getDocs, updateDoc, doc, deleteDoc} from 'fir
     },
   }
 </script>
-
