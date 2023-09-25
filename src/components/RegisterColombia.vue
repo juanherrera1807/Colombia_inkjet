@@ -3,19 +3,17 @@
   <div class="container-form login">
     <div class="information">
       <div class="info-childs">
-        <h2>Bienvenido Nuevamente!!</h2>
-        <p>Para unirte a nuestra comunidad por favor Inicia Sesion con tus datos</p>
+        <div class="logo">
+          <v-img src="@/assets/2.png"></v-img>
+          </div>
       </div>
     </div>
     <div class="form-information">
       <div class="form-information-childs">
         <h2>Iniciar Sesion</h2>
         <div class="icons">
-          <i class='mdi mdi-google'></i>
-          <i class='mdi mdi-facebook'></i>
-          <i class='mdi mdi-linkedin' ></i>
+
         </div>
-        <p>o Iniciar Sesion con una cuenta</p>
         <form class="datos">
           <label>
             <i class='bx bx-envelope'></i>
@@ -117,7 +115,7 @@ export default {
 }
 
 .information {
-    width: 40%;
+    width: 50%;
     display: flex;
     align-items: center;
     text-align: center;
@@ -125,10 +123,12 @@ export default {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
-
+/* .logo{
+  margin: 10% ;
+} */
 .info-childs {
-    width: 100%;
-    padding: 0 45px;
+    width: 500px;
+    padding: 1px;
 }
 
 .info-childs h2 {
