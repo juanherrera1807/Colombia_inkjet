@@ -58,7 +58,7 @@ style="height: 300px"
         <v-btn
           rounded
           variant="text"
-         to="/usuario">
+          @click="cerrarSesion">
           Cerrar Sesion
         </v-btn>
       </div>
@@ -83,11 +83,6 @@ style="height: 300px"
         <v-list-item prepend-icon="mdi mdi-account-plus" title="Usuario" value="usuario" to=/usuario></v-list-item>
         <v-list-item prepend-icon="mdi mdi-cogs" title="Mantenimiento" value="mantenimiento" to=/mantenimiento></v-list-item>
       </v-list>
-      <v-list >
-        <v-spacer></v-spacer>
-        
-        <v-list-item prepend-icon="mdi mdi-clipboard-text" title="INICIAR SESION" value="registrar" to=/registrar></v-list-item>
-      </v-list>
   </v-navigation-drawer>
 
   <v-main style="height: 100vh; width: 100vw">
@@ -107,6 +102,15 @@ user: {
   drawer: false,
   group: null,
 }),
+
+methods: {
+    cerrarSesion() {
+      // Aquí puedes realizar cualquier lógica de cierre de sesión necesaria
+
+      // Emitir un evento para indicar que el usuario ha cerrado sesión
+      this.$emit('cerrar-sesion');
+    },
+  },
 
 watch: {
   group () {
