@@ -23,7 +23,7 @@
             <i class='bx bx-lock-alt'></i>
             <input v-model="loginPassword" type="password" placeholder="Contraseña">
           </label>
-          <input @click='iniciarSesion' type="submit" value="Iniciar Sesion">
+          <input @click='created' type="submit" value="Iniciar Sesion">
         </form>
       </div>
     </div>
@@ -71,18 +71,14 @@ export default {
       if (user) {
         // Usuario correcto
         console.log("Ingreso");
-        this.$router.push({ path: "/menu" });
+        this.$emit('inicio-sesion-exitoso');
+        this.$router.push({ path: "/impresora" });
       } else {
         // Usuario incorrecto
         alert("Usuario o contraseña incorrecta.");
       }
     }, 
     
-    iniciarSesion() {
-      // Lógica de autenticación aquí
-      // Después de autenticar con éxito, emite un evento
-      this.$emit('inicio-sesion-exitoso');
-    },
   },
 }
 </script>
