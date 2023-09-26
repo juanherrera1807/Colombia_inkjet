@@ -72,7 +72,7 @@ export default {
         // Usuario correcto
         console.log("Ingreso");
         this.$emit('inicio-sesion-exitoso');
-        this.$router.push({ path: "/impresora" });
+        this.$router.push({ path: "/home" });
       } else {
         // Usuario incorrecto
         alert("Usuario o contraseña incorrecta.");

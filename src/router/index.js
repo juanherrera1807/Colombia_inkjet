@@ -1,7 +1,8 @@
 import { createWebHashHistory ,createRouter } from "vue-router";
 /* import store from '../stores/store' */
 
-import menu from "../App.vue";
+/* import menu from "../App.vue */
+import home from "../components/HomeColombia.vue";
 import inventario from "../components/InventarioColombia.vue";
 import usuario from "../components/UsuarioColombia.vue";
 import impresora from '../components/ImpresoraCol.vue';
@@ -10,9 +11,9 @@ import empresas from '../components/EmpresasCol.vue'
 const routes = [
 
 {
-    path: "/menu",
-    name: "menu",
-    component: menu,
+    path: "/home",
+    name: "home",
+    component: home,
     meta: {requiresAuth: true}
 }, 
 {

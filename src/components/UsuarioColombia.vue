@@ -171,9 +171,8 @@
         {
           align: 'start',
           sortable: false,
-          key: 'rol',
+          key: '',
         },
-        { title: 'Id', key: 'id' },
         { title: 'Usuario', key: 'usuario' },
         { title: 'Clave', key: 'clave' },
         { title: 'Actions', key: 'actions', sortable: false },
@@ -181,15 +180,11 @@
       desserts: [],
       editedIndex: -1,
       editedItem: {
-        keyId:0,
-        rol: ' ',  
-        id: ' ',
+
         usuario: ' ',
         clave: ' ',
       },
       defaultItem: {
-        rol: ' ', 
-        id: 0,
         usuario: ' ',
         clave: ' ',
       },

@@ -1,5 +1,6 @@
 // store.js
 import { createStore } from 'vuex'
+import { auth } from '../firebase/datos';
 
 export default createStore({
     state: {
@@ -31,6 +32,17 @@ export default createStore({
     },
 
     actions: {
+        async login({ commit }, { email, password }) {
+            try {
+              const userCredential = await auth.signInWithEmailAndPassword(email, password);
+              const user = userCredential.user;
+              commit('SET_USER', user);
+              return { success: true, user };
+            } catch (error) {
+              return { success: false, error };
+            }
+          },
+
         setUser({ commit }, user) {
             commit('SET_USER', user);
         },

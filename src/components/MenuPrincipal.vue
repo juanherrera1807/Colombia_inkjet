@@ -77,6 +77,7 @@ style="height: 300px"
     temporary
   >
   <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi mdi-home-circle" title="Home" value="home" to=/home></v-list-item>
         <v-list-item prepend-icon="mdi mdi-printer" title="Impresoras" value="impresoras" to=/impresora></v-list-item>
         <!-- Inventario es lo mismo que impresoras -->
         <v-list-item prepend-icon="mdi mdi-monitor-multiple" title="Empresas" value="empresas" to=/empresas></v-list-item>
