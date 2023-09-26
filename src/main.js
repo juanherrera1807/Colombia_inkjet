@@ -18,7 +18,7 @@ import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
 import { faUserXmark } from "@fortawesome/free-solid-svg-icons";
 import { faGears} from "@fortawesome/free-solid-svg-icons";
 
-import { createPinia } from 'pinia'
+import { store } from './stores/store'
 
 library.add(faUserSecret);
 library.add(faHouseUser);
@@ -35,13 +35,11 @@ library.add(faGears);
 
 loadFonts()
 
-const pinia = createPinia()
-
 
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
   .use(vuetify)
-  .use(pinia)
+  .use(store)
   .mount('#app')
