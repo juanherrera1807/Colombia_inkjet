@@ -1,5 +1,6 @@
 <template>
   <div class="body">
+    <div v-if="!isLoggedIn">
   <div class="container-form login">
     <div class="information">
       <div class="info-childs">
@@ -27,21 +28,35 @@
         </form>
       </div>
     </div>
-  </div>
-  </div>
+  </div> 
+</div>  
+        <div v-else>
+          <MenuPrincipal @cerrar-sesion="cerrarSesion" />
+        </div>
+</div>
+    
 </template>
 
 <script>
 import db from '../firebase/datos.js';
 import { collection, query, getDocs } from 'firebase/firestore'
+import MenuPrincipal from '../components/MenuPrincipal.vue';
+
 
 export default {
+  
   name: "LoginComponent",
+  components: {
+    MenuPrincipal, // Agrega el componente en la sección 'components'
+  },
   data() {
+    
     return {
       loginUser: "",
       loginPassword: "",
       users: [],
+      hide: false,
+      isLoggedIn: false,
     };
   },
   methods: {
@@ -70,9 +85,10 @@ export default {
       );
       if (user) {
         // Usuario correcto
+        this.isLoggedIn = true;
         console.log("Ingreso");
         this.$emit('inicio-sesion-exitoso');
-        this.$router.push({ path: "/home" });
+        this.$router.push({ path: "/menu" });
       } else {
         // Usuario incorrecto
         alert("Usuario o contraseña incorrecta.");
@@ -285,7 +301,7 @@ export default {
   width: 50%;
   padding: 10px;
   color: beige;
-  background-color: rgb(45, 176, 199);
+  background-color: rgba(43, 190, 245, 0.5);
 }
 
 </style>
