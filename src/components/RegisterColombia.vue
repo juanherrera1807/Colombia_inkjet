@@ -17,7 +17,7 @@
         <form class="datos">
           <label>
             <i class='bx bx-envelope'></i>
-            <input v-model="loginEmail" placeholder="Correo Electronico">
+            <input v-model="loginUser" placeholder="Usuario">
           </label>
           <label>
             <i class='bx bx-lock-alt'></i>
@@ -39,7 +39,7 @@ export default {
   name: "LoginComponent",
   data() {
     return {
-      loginEmail: "",
+      loginUser: "",
       loginPassword: "",
       users: [],
     };
@@ -66,7 +66,7 @@ export default {
       console.log(this.users)
       const user = this.users.find(
         (user) =>
-          user.usuario === this.loginEmail && user.clave === this.loginPassword
+          user.usuario === this.loginUser && user.clave === this.loginPassword
       );
       if (user) {
         // Usuario correcto

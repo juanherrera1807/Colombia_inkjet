@@ -56,26 +56,7 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.rol"
-                      label="Rol"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.id"
-                      label="Id"
-                    ></v-text-field>
-                  </v-col>
+                  
                   <v-col
                     cols="12"
                     sm="6"
@@ -168,11 +149,7 @@
       dialogDelete: false,
       search: '',
       headers: [
-        {
-          align: 'start',
-          sortable: false,
-          key: '',
-        },
+        
         { title: 'Usuario', key: 'usuario' },
         { title: 'Clave', key: 'clave' },
         { title: 'Actions', key: 'actions', sortable: false },
@@ -180,13 +157,15 @@
       desserts: [],
       editedIndex: -1,
       editedItem: {
-
-        usuario: ' ',
-        clave: ' ',
+        keyId:0,  
+        
+        usuario: '',
+        clave: '',
       },
-      defaultItem: {
-        usuario: ' ',
-        clave: ' ',
+      defaultItem: { 
+        
+        usuario: '',
+        clave: '',
       },
     }),
 
@@ -214,10 +193,9 @@
       initialize(){
         this.desserts = [
           {
-            rol: ' ',
-            id: ' ',
-            usuario: ' ',
-            clave: ' ',
+            
+            usuario: '',
+            clave: '',
           }
 
         ]
@@ -230,8 +208,7 @@
                 console.log('id', doc.id);
                 this.desserts.push({
                   keyId: doc.id,
-                  rol : doc.data().rol,
-                  id: doc.data().id,
+                  
                   usuario: doc.data().usuario,
                   clave: doc.data().clave,
                   })
@@ -240,10 +217,9 @@
 
           async createUser(){
             const colRef = collection(db, 'usuarios');
-            console.log(this.editedItem.rol,"",this.editedItem.id,"",this.editedItem.usuario,"",this.editedItem.clave,"",)
+            console.log(this.editedItem.id,"",this.editedItem.usuario,"",this.editedItem.clave,"",)
             const dataObj = {
-              rol: this.editedItem.rol,
-              id: this.editedItem.id,
+                id: this.editedItem.id,
               usuario: this.editedItem.usuario,
               clave: this.editedItem.clave
             }
@@ -258,8 +234,8 @@
             console.log (this.editItem.keyId)
             const ref = doc(db, "usuarios", this.editedItem.keyId);
             await updateDoc(ref, {
-                rol: this.editedItem.rol,
-                id: this.editedItem.id,
+                
+                
                 usuario: this.editedItem.usuario,
                 clave: this.editedItem.clave,
               })
@@ -280,24 +256,6 @@
       this.desserts = []
     },
 
-/*         initialize () {
-        this.desserts = [
-          {
-            rol: 'Administrador',
-            usuario: 'Juan',
-            clave: '1234',
-            id: 1,
-          
-          },
-          {
-            rol: 'Tecnico',
-            usuario: 'Javier',
-            clave: '1234',
-            id: 2,
-          }, 
-          
-        ]
-      }, */
 
       editItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
