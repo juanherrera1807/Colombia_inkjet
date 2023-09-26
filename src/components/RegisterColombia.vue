@@ -23,7 +23,7 @@
             <i class='bx bx-lock-alt'></i>
             <input v-model="loginPassword" type="password" placeholder="Contraseña">
           </label>
-          <input @click='created' type="submit" value="Iniciar Sesion">
+          <v-btn @click='created'  value="Iniciar Sesion" class="botonLogin"> Ingresar </v-btn>
         </form>
       </div>
     </div>
@@ -281,6 +281,11 @@ export default {
         border-top-right-radius: 0;
     }
 }
-
+.botonLogin{
+  width: 50%;
+  padding: 10px;
+  color: beige;
+  background-color: rgb(45, 176, 199);
+}
 
 </style>

@@ -157,7 +157,7 @@
       desserts: [],
       editedIndex: -1,
       editedItem: {
-        keyId:0,  
+          
         
         usuario: '',
         clave: '',
@@ -217,9 +217,9 @@
 
           async createUser(){
             const colRef = collection(db, 'usuarios');
-            console.log(this.editedItem.id,"",this.editedItem.usuario,"",this.editedItem.clave,"",)
+            console.log(this.editedItem.usuario,"",this.editedItem.clave,"",)
             const dataObj = {
-                id: this.editedItem.id,
+                
               usuario: this.editedItem.usuario,
               clave: this.editedItem.clave
             }
