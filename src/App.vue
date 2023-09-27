@@ -16,7 +16,7 @@
          <v-btn fluid style="height: 300px" @click="iniciarSesion">Iniciar Sesión</v-btn>
        </v-app-bar>
  
-       <v-main>
+       <v-main style=" min-height: 100vh;">
         <div class="parent">
           <div class="div1"> </div>
           <div class="div2"> 
@@ -33,11 +33,7 @@
               Con nosotros, puedes concentrarte en lo que mejor haces, mientras nosotros nos ocupamos 
               de mantener tus impresoras funcionando sin problemas y tus documentos impresos con la máxima calidad.</p>
           </div>
-        </div>  
- <!-- Mostrar el componente de inicio de sesión si no está autenticado -->
-        
-         
- 
+        </div>
        </v-main>
      </v-layout>
      

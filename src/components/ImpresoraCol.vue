@@ -43,6 +43,13 @@
             >
               NUEVO EQUIPO
             </v-btn>
+            <v-btn
+              color="primary"
+              dark
+              @click="imprimir()"
+            >
+              IMPRIMIR
+            </v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -174,6 +181,8 @@
   </v-data-table>
 </template>
 <script>
+import jsPDF from 'jspdf';
+require('jspdf-autotable');
 import db from '../firebase/datos.js';
 import {collection, addDoc, query, getDocs, updateDoc, doc, deleteDoc} from 'firebase/firestore'
   export default {
@@ -341,6 +350,22 @@ import {collection, addDoc, query, getDocs, updateDoc, doc, deleteDoc} from 'fir
         }
         this.close()
       },
+      async imprimir() {
+      let columns = [
+        { title: "Marca", dataKey: "marca" },
+        { title: "Serial", dataKey: "serial" },
+        { title: "Nombre", dataKey: "nombre" },
+      ];
+      let registros = this.desserts;
+      let doc = new jsPDF("p", "pt");
+      doc.autoTable(columns, registros, {
+        margin: { top: 60 },
+        addPageContent: function () {
+          doc.text("Inventario", 40, 30);
+        },
+      });
+      doc.save("Inventario.pdf");
+    },
     },
   }
 </script>

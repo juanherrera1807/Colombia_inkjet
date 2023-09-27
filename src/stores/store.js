@@ -1,62 +1,31 @@
 // store.js
-import { createStore } from 'vuex'
-import { auth } from '../firebase/datos';
+import Vuex from 'vuex'
 
-export default createStore({
-    state: {
-        isAuthenticated: false,
-        userData: null
+export default new Vuex.Store({
+  state: {
+    usuario: null,
+    isLoggedIn: false
+  },
+  mutations: {
+    setUsuario(state, usuario) {
+      state.usuario = usuario
     },
-
-    mutations: {
-        SET_USER(state, user) {
-            state.isAuthenticated = true;
-            state.userData = user;
-            localStorage.setItem('user', JSON.stringify(user));
-        },
-        LOGOUT(state) {
-            state.isAuthenticated = false;
-            state.userData = null;
-            localStorage.removeItem('user');
-            localStorage.removeItem('userId');
-        },
-        limpiarCredenciales(state) {
-            // Lógica para limpiar las credenciales
-            state.isAuthenticated = false;
-            state.userData = null;
-            localStorage.removeItem('user');
-        },
-        setUserAuthenticated(state, value) {
-            state.isAuthenticated = value;
-        },
-    },
-
-    actions: {
-        async login({ commit }, { email, password }) {
-            try {
-              const userCredential = await auth.signInWithEmailAndPassword(email, password);
-              const user = userCredential.user;
-              commit('SET_USER', user);
-              return { success: true, user };
-            } catch (error) {
-              return { success: false, error };
-            }
-          },
-
-        setUser({ commit }, user) {
-            commit('SET_USER', user);
-        },
-        logout({ commit }) {
-            commit('LOGOUT');
-        },
-        initializeStore({ state }) {
-            if (localStorage.getItem('user')) {
-                state.userData = JSON.parse(localStorage.getItem('user'));
-                state.isAuthenticated = true;
-            } else {
-                state.userData = null;
-                state.isAuthenticated = false;
-            }
-        }
+    setLoggedIn(state, value) {
+      state.isLoggedIn = value
     }
-});
+  },
+  actions: {
+    login({ commit }, { usuario, isLoggedIn }) {
+      commit('setUsuario', usuario)
+      commit('setLoggedIn', isLoggedIn)
+    },
+    logout({ commit }) {
+      commit('setUsuario', null)
+      commit('setLoggedIn', false)
+    }
+  },
+  getters: {
+    usuario: state => state.usuario,
+    isLoggedIn: state => state.isLoggedIn
+  }
+})

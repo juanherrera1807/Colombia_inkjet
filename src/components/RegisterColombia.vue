@@ -88,7 +88,7 @@ export default {
         this.isLoggedIn = true;
         console.log("Ingreso");
         this.$emit('inicio-sesion-exitoso');
-        this.$router.push({ path: "/menu" });
+        this.$router.push({ path: "/home" });
       } else {
         // Usuario incorrecto
         alert("Usuario o contraseña incorrecta.");
