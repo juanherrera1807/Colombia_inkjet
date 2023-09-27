@@ -19,12 +19,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo transparente */
+    background-color: rgba(223, 223, 223, 0.659); /* Fondo transparente */
   }
   
   .background {
-    background-image: url('@/assets/2.png'); /* Agrega la imagen de fondo */
-    background-size: cover;
+    background-image: url('@/assets/3.png'); /* Agrega la imagen de fondo */
+    background-size: 55%;
     background-repeat: no-repeat;
     background-position: center;
     width: 80vw; /* Ancho relativo al viewport */
@@ -33,8 +33,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: .8;
     position: relative; /* Añade posición relativa para elementos internos */
-    filter: blur(2px); /* Agrega efecto de desenfoque */
+    /* filter: blur(2px); */ /* Agrega efecto de desenfoque */
   }
   
   .logo {
