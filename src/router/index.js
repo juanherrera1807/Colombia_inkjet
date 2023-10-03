@@ -1,7 +1,7 @@
 import { createWebHashHistory ,createRouter } from "vue-router";
 /* import store from '../stores/store' */
 
-/* import menu from "../App.vue */
+
 import home from "../components/HomeColombia.vue";
 import inventario from "../components/InventarioColombia.vue";
 import usuario from "../components/UsuarioColombia.vue";
@@ -37,7 +37,7 @@ const routes = [
 {
   path: "/registrar",
   name: 'registrar',
-  component: registrar,
+  component: registrar, 
   meta: {requiresAuth: true}
 },
 {

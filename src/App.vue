@@ -13,7 +13,38 @@
            </v-img>
          </v-toolbar-title>
          <v-spacer></v-spacer>
-         <v-btn fluid style="height: 300px" @click="iniciarSesion">Iniciar Sesión</v-btn>
+         <!-- <v-btn fluid style="height: 300px" @click="iniciarSesion">Iniciar Sesión</v-btn> -->
+         <v-dialog width="500">
+  <template v-if="!isLoggedIn" v-slot:activator="{ props }">
+    <v-btn v-bind="props" text="Iniciar Sesion"> </v-btn>
+  </template>
+
+  <template v-if="!isLoggedIn" v-slot:default="{ isActive }">
+    
+    <v-card>
+      <div class="titulo">INICIAR SESION</div>
+          <v-img src="../src/assets/logo_colombia.png" height="100" margin="0px" justify-content="center" align-content="center"/>
+
+  
+        <div class="container">
+          <label for="usuario"><b>Usuario</b></label>
+          <input type="text" v-model="loginUser" placeholder="Ingrese Usuario" name="usuario" required />
+  
+          <label for="clave"><b>Contraseña</b></label>
+          <input type="password" v-model="loginPassword" placeholder="Ingrese Contraseña" name="clave" required />
+        </div>
+        
+
+        <div class="boton" style="background-color:#f1f1f1;">
+          <v-btn type="button" class="cancelbtn" @click="isActive.value = false">Cancelar</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn type="submit" class="login" @click='created' value="Iniciar Sesion">Ingresar</v-btn> 
+        </div>
+        
+    </v-card>
+  </template>
+</v-dialog>
+                      
        </v-app-bar>
  
        <v-main style=" min-height: 100vh;">
@@ -39,47 +70,80 @@
      
    </v-card>     
         <div v-else>
-          <RegisterColombia @inicio-sesion-exitoso="iniciarSesion" />
+          <!-- <RegisterColombia @inicio-sesion-exitoso="iniciarSesion" /> -->
+          <!-- <Popup @inicio-sesion-exitoso="iniciarSesion" /> -->
+          <MenuPrincipal @cerrar-sesion="cerrarSesion" />
         </div>
+          
 
  </template>
  
  <script>
- 
- import RegisterColombia from '../src/components/RegisterColombia.vue';
+/* import Popup from '../src/components/PopColombia.vue' */
+/* import RegisterColombia from '../src/components/RegisterColombia.vue'; */
 
- 
- export default {
-   name: 'App',
- 
-   components: {
-      
-      RegisterColombia,
+import db from '../src/firebase/datos';
+import { collection, query, getDocs } from 'firebase/firestore'
+import MenuPrincipal from '../src/components/MenuPrincipal.vue';
+
+export default {
   
+  components: {
+    MenuPrincipal, // Agrega el componente en la sección 'components'
+  },
+
+  data() {
     
- 
-   },
- 
-   data: () => ({
-     isLoggedIn: false, // Inicializa la variable isLoggedIn en false
-   }),
- 
+    return {
+      loginUser: "",
+      loginPassword: "",
+      users: [],
+      hide: false,
+      isLoggedIn: false
+    };
+  },
+
    methods: {
-     iniciarSesion() {
-       // Aquí puedes realizar la lógica de autenticación, por ejemplo, verificar las credenciales del usuario.
-       // Si la autenticación es exitosa, establece isLoggedIn en true y Vue Router navegará a "/registrar".
-       this.isLoggedIn = true;
-     },
- 
-     cerrarSesion() {
-       // Realiza la lógica de cierre de sesión aquí (por ejemplo, reinicia variables, elimina tokens, etc.)
-       // Después de cerrar sesión, puedes redirigir al usuario a donde desees.
-       this.isLoggedIn = false;
-     },
-   },
- };
+    async listar() {
+      const q = query(collection(db, 'usuarios'));
+      const result = await getDocs(q);
+      result.forEach((doc) => {
+        this.users.push({
+          usuario: doc.data().usuario,
+          clave: doc.data().clave,
+        });
+      });
+    },
+  
+    async created() {
+      await this.listar(); // Espera a que se complete la operación de listar
+      this.login(); // Llama a login() después de llenar el array users[]
+    },
+  
+    async login() {
+      // Verifica que el usuario y la contraseña sean correctos
+      console.log(this.users)
+      const user = this.users.find(
+        (user) =>
+          user.usuario === this.loginUser && user.clave === this.loginPassword
+      );
+      if (user) {
+        // Usuario correcto
+        this.isLoggedIn = true;
+        console.log("Ingreso");
+        this.$emit('inicio-sesion-exitoso');
+        this.$router.push({ path: "/home" });
+      } else {
+        // Usuario incorrecto
+        alert("Usuario o contraseña incorrecta.");
+      }
+    }, 
+    
+  },
+}
+
  </script>
-<style>
+<style scoped>
 .parent {
 display: grid;
 grid-template-columns: 0.5fr repeat(10, 1fr) 0.5fr;
@@ -95,5 +159,91 @@ grid-row-gap: 5px;
 .tituloUno{color: rgb(33, 150, 253);font-size: 35pt;text-align: start; padding-bottom: 4%;font-family: Spinnaker;}
 
 p{text-align:start;padding-top: 2%;font-size: 12pt;font-family: Spinnaker;}
+
+/* Bordered form */
+form {
+    border: 3px solid #f1f1f1;
+  }
+  
+  /* Full-width inputs */
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  /* Set a style for all buttons */
+  v-btn {
+    background-color: rgb(33, 150, 253);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    
+  }
+  
+  /* Add a hover effect for buttons */
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Extra style for the cancel button (red) */
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+
+  .login{
+    background-color: rgb(33, 150, 253) ;
+    color: white;
+  }
+  
+  /* Center the avatar image inside this container */
+  /* .imgcontainer {
+    width: 100px;
+    justify-content: center;
+  } */
+  
+  /* Avatar image */
+  /* .avatar {
+    justify-items: center;
+    border-radius: 50%;
+    width: 100px;
+  } */
+  
+  /* Add padding to containers */
+  .container {
+    padding: 16px;
+  }
+
+  .boton {
+    padding: 16px;
+    display: flex;
+  }
+
+  .titulo {
+    justify-content: center;
+    display: flex;
+    margin: 22px;
+    font-size: 24px;
+}
+  
+  
+  /* Change styles for span and cancel button on extra small screens */
+  @media screen and (max-width: 300px) {
+    span.psw {
+      display: block;
+      float: none;
+    }
+    .cancelbtn {
+      width: 100%;
+    }
+  }
 
 </style>

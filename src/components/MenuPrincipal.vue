@@ -93,7 +93,9 @@ style="height: 300px"
 </v-card>
 </template>
 <script>
+
 export default {
+
 data: () => ({
 user: {
     initials: 'AD',
@@ -110,6 +112,7 @@ methods: {
 
       // Emitir un evento para indicar que el usuario ha cerrado sesión
       this.$emit('cerrar-sesion');
+      
     },
   },
 
