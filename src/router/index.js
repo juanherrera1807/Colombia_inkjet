@@ -8,6 +8,8 @@ import usuario from "../components/UsuarioColombia.vue";
 import impresora from '../components/ImpresoraCol.vue';
 import registrar from '../components/RegisterColombia.vue'
 import empresas from '../components/EmpresasCol.vue'
+import mantenimiento from '../components/MantenimientoCol.vue'
+
 const routes = [
 
 {
@@ -45,6 +47,12 @@ const routes = [
   name: "empresas",
   component: empresas,
   meta: {requiresAuth: true}
+},
+{
+  path: "/mantenimiento",
+  name: "mantenimiento",
+  component: mantenimiento,
+  meta:  {requiresAuth: true}
 }
 ];
 
