@@ -94,16 +94,7 @@
                         label="Telefono"
                       ></v-text-field>
                     </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.encargado"
-                        label="Encargado"
-                      ></v-text-field>
-                    </v-col>
+                   
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -178,7 +169,6 @@
           { title: 'Nombre', align: 'end', key: 'nombre' },
           { title: 'Direccion', align: 'end', key: 'direccion' },
           { title: 'Telefono', align: 'end', key: 'telefono' },
-          { title: 'Encargado', align: 'end', key: 'encargado' },
           { title: 'Actions', key: 'actions', sortable: false },
         ],
         desserts: [],
@@ -188,14 +178,13 @@
           nombre: ' ',
           direccion: ' ',
           telefono:' ',
-          encargado: ' ',
         },
         defaultItem: {
           nit: ' ',
           nombre: ' ',
           direccion: ' ',
           telefono:' ',
-          encargado: ' ',
+
         },
       }),
   
@@ -226,7 +215,6 @@
               nombre: ' ',
               direccion:' ',
               telefono: ' ',
-              encargado: ' ',
             },
           ]
         },
@@ -242,7 +230,6 @@
             nombre: doc.data().nombre,
             direccion: doc.data().direccion,
             telefono: doc.data().telefono,
-            encargado: doc.data().encargado,
           })
         });
       },
@@ -254,7 +241,6 @@
             nombre: this.editedItem.nombre,
             direccion: this.editedItem.direccion,
             telefono: this.editedItem.telefono,
-            encargado: this.editedItem.encargado
   
           })
           .then(console.log('actualizacion hecha'))
@@ -270,7 +256,6 @@
             nombre: this.editedItem.nombre,
             direccion: this.editedItem.direccion,
             telefono: this.editedItem.telefono,
-            encargado: this.editedItem.encargado,
         }
         const docRef= await addDoc(colRef, dataObj)
         console.log(docRef.id)
